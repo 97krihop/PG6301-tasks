@@ -1,0 +1,19 @@
+body {
+    background-color: #333333;
+    color: #dddddd;
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+}
+h1 {
+    font-size: 3rem;
+}
+
+.quizContainer {
+    display: flex;
+    flex-direction: column;
+}
+.answer {
+    margin: 1rem;
+    font-size: 1rem;
+}

@@ -1,40 +1,31 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import {BrowserRouter, Link} from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {Route, Switch} from "react-router";
-import {BookListPage} from "./BookListPage";
-import {CreateBookPage} from "./CreateBookPage";
+import {BrowserRouter, Link} from 'react-router-dom';
 
-function Application() {
+import {Match} from './match';
+import {NotFound} from './not_found';
+import {Home} from './home';
+
+const App = () => {
     return <BrowserRouter>
         <nav>
             <Link to={"/"}>Home</Link>
         </nav>
         <main>
             <Switch>
-                <Route path={"/books"}>
-                    <BookListPage/>
-                </Route>
-                <Route path={"/create"}>
-                    <CreateBookPage/>
-                </Route>
-                <Route path={"/edit"}>
-                    <h1>Edit an existing book</h1>
+                <Route path={"/match"}>
+                    <Match/>
                 </Route>
                 <Route exact path={"/"}>
-                    <h1>Book application home page</h1>
-                    <ul>
-                        <li><Link to={"/books"}>List books</Link></li>
-                        <li><Link to={"/create"}>Add a book</Link></li>
-                    </ul>
+                    <Home/>
                 </Route>
                 <Route>
-                    Page not found
+                    <NotFound/>
                 </Route>
             </Switch>
         </main>
-    </BrowserRouter>;
-}
+    </BrowserRouter>
+};
 
-
-ReactDOM.render(<Application />, document.getElementById("root"));
+ReactDOM.render(<App/>, document.getElementById('root'));
