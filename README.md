@@ -1,4 +1,3 @@
-
 Setting up a react application:
 
 1. `npm init`
@@ -15,9 +14,7 @@ Now the React application should be showing
 
 ## Troubleshooting
 
-* Check parcel version
-* Restart parcel (npm start)
-* Delete .cache directory
-* Run `npm install` - perhaps also delete `node_modules` directory
-
-
+- Check parcel version
+- Restart parcel (npm start)
+- Delete .cache directory
+- Run `npm install` - perhaps also delete `node_modules` directory
