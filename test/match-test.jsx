@@ -1,7 +1,7 @@
 //TODO fix enzyme to work or work around enzyme
 const React = require("react");
 const { mount } = require("enzyme");
-const { Match } = require("../src/client/match");
+const { Match } = require("../src/client/pages/match");
 
 function checkQuizIsDisplayed(driver) {
   const questions = driver.find(".question");

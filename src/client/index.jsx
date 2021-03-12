@@ -1,24 +1,24 @@
 import React from 'react';
-import ReactDOM from "react-dom";
-import { Route, Switch } from "react-router";
-import { BrowserRouter, Link } from "react-router-dom";
+import ReactDOM from 'react-dom';
+import { Route, Switch } from 'react-router';
+import { BrowserRouter, Link } from 'react-router-dom';
 
-import { Match } from "./match";
-import { NotFound } from "./not_found";
-import { Home } from "./home";
+import { Match } from './pages/match';
+import { NotFound } from './pages/not_found';
+import { Home } from './pages/home';
 
 const App = () => {
   return (
     <BrowserRouter>
       <nav>
-        <Link to={"/"}>Home</Link>
+        <Link to={'/'}>Home</Link>
       </nav>
       <main>
         <Switch>
-          <Route path={"/match"}>
+          <Route path={'/match'}>
             <Match />
           </Route>
-          <Route exact path={"/"}>
+          <Route exact path={'/'}>
             <Home />
           </Route>
           <Route>
@@ -30,4 +30,4 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
