@@ -4,13 +4,15 @@ import LoadingView from '../components/LoadingView';
 
 export const Match = () => {
   const [error, setError] = useState(null);
-  const [quiz, setQuiz] = useState();
+  const [quiz, setQuiz] = useState(null);
   const [victory, setVictory] = useState(false);
   const [defeat, setDefeat] = useState(false);
   const [current, setCurrent] = useState(0);
   const [length, setLength] = useState(0);
 
-  useEffect(() => startGame(), []);
+  useEffect(() => {
+    startGame();
+  }, []);
 
   const startGame = async () => {
     const quizzes = await fetchQuizzes(3);
@@ -28,18 +30,13 @@ export const Match = () => {
   const fetchQuizzes = async (numberOfQuizzes) => {
     if (numberOfQuizzes < 1)
       throw 'Invalid number of requested quizzes: ' + numberOfQuizzes;
-
-    let payload;
-
     try {
       const response = await fetch('/api/matches', { method: 'post' });
       if (response.status !== 201) return null;
-      payload = await response.json();
+      return await response.json();
     } catch (err) {
       return null;
     }
-
-    return payload;
   };
 
   const handleClick = (x) => {
@@ -50,7 +47,6 @@ export const Match = () => {
   };
 
   if (error) return <h2>{error}</h2>;
-
   if (!quiz) return <LoadingView />;
 
   if (victory) {
@@ -79,12 +75,14 @@ export const Match = () => {
     );
   }
 
-  return (
-    <Quiz
-      answers={quiz.answers}
-      question={quiz.question}
-      correct={quiz.correct}
-      handleClick={handleClick}
-    />
-  );
+  if (quiz) {
+    return (
+      <Quiz
+        answers={quiz[current].answers}
+        question={quiz[current].question}
+        correct={quiz[current].correct}
+        handleClick={handleClick}
+      />
+    );
+  }
 };

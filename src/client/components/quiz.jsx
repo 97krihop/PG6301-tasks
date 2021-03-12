@@ -6,6 +6,8 @@ const Quiz = ({ question, answers, correct, handleClick }) => {
       {prefix + answer}
     </button>
   );
+  if (!question)return null
+
 
   return (
     <>
