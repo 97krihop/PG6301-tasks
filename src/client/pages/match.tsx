@@ -7,8 +7,8 @@ export interface IQuiz {
   question: string;
   correct: number;
 }
-
-export const Match = (): any => {
+// TODO fix type to not any
+export const Match: any = () => {
   const [error, setError] = useState<string | null>(null);
   const [quiz, setQuiz] = useState<IQuiz[] | null>(null);
   const [victory, setVictory] = useState(false);

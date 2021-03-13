@@ -2,7 +2,7 @@
   "name": "quiz-game",
   "version": "1.0.0",
   "private": true,
-  "main": "index.js",
+  "main": "src/client/index.tsx",
   "author": "Kristoffer Larsen Hopland",
   "license": "Apache 2.0",
   "dependencies": {
