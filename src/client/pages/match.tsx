@@ -2,9 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Quiz from '../components/quiz';
 import LoadingView from '../components/LoadingView';
 
-export const Match = () => {
-  const [error, setError] = useState(null);
-  const [quiz, setQuiz] = useState(null);
+export interface IQuiz {
+  answers: string[];
+  question: string;
+  correct: number;
+}
+
+export const Match = (): any => {
+  const [error, setError] = useState<string | null>(null);
+  const [quiz, setQuiz] = useState<IQuiz[] | null>(null);
   const [victory, setVictory] = useState(false);
   const [defeat, setDefeat] = useState(false);
   const [current, setCurrent] = useState(0);
@@ -16,7 +22,7 @@ export const Match = () => {
 
   const startGame = async () => {
     const quizzes = await fetchQuizzes(3);
-    if (!quizzes) setError('Error when connecting to server');
+    if (!quizzes) setError(`Error when connecting to server`);
     else {
       setError(null);
       setQuiz(quizzes);
@@ -27,7 +33,7 @@ export const Match = () => {
     }
   };
 
-  const fetchQuizzes = async (numberOfQuizzes) => {
+  const fetchQuizzes = async (numberOfQuizzes: number) => {
     if (numberOfQuizzes < 1)
       throw 'Invalid number of requested quizzes: ' + numberOfQuizzes;
     try {
@@ -39,7 +45,7 @@ export const Match = () => {
     }
   };
 
-  const handleClick = (x) => {
+  const handleClick = (x: boolean): void => {
     if (x) {
       if (current === length - 1) setVictory(true);
       else setCurrent(current + 1);
@@ -76,13 +82,6 @@ export const Match = () => {
   }
 
   if (quiz) {
-    return (
-      <Quiz
-        answers={quiz[current].answers}
-        question={quiz[current].question}
-        correct={quiz[current].correct}
-        handleClick={handleClick}
-      />
-    );
+    return <Quiz quiz={quiz[current]} handleClick={handleClick} />;
   }
 };

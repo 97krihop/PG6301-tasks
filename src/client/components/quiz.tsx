@@ -1,13 +1,22 @@
 import React from 'react';
+import { IQuiz } from '../pages/match';
 
-const Quiz = ({ question, answers, correct, handleClick }) => {
-  const renderAnswerTag = (prefix, answer, correct) => (
+interface props {
+  quiz: IQuiz;
+  handleClick: (x: boolean) => void;
+}
+
+const Quiz = ({ quiz: { question, answers, correct }, handleClick }: props) => {
+  const renderAnswerTag = (
+    prefix: string,
+    answer: string,
+    correct: boolean
+  ) => (
     <button className='answer' onClick={() => handleClick(correct)}>
       {prefix + answer}
     </button>
   );
-  if (!question)return null
-
+  if (!question) return null;
 
   return (
     <>
