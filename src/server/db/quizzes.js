@@ -1,7 +1,7 @@
 const quiz = [
   {
     question: 'what is absolute zero?',
-    answers: ['-300 Celsius', '0 Kelvin', '0  Fahrenheit', '0 Celsius'],
+    answers: ['-300 Celsius', '0 Kelvin', '0 Fahrenheit', '0 Celsius'],
     correct: 1,
   },
   {
