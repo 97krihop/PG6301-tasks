@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Quiz from '../components/quiz';
 import LoadingView from '../components/LoadingView';
 
@@ -7,8 +7,8 @@ export interface IQuiz {
   question: string;
   correct: number;
 }
-// TODO fix type to not any
-export const Match: any = () => {
+
+export const Match = (): ReactElement => {
   const [error, setError] = useState<string | null>(null);
   const [quiz, setQuiz] = useState<IQuiz[] | null>(null);
   const [victory, setVictory] = useState(false);
@@ -84,4 +84,5 @@ export const Match: any = () => {
   if (quiz) {
     return <Quiz quiz={quiz[current]} handleClick={handleClick} />;
   }
+  return <></>;
 };
