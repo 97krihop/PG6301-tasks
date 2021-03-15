@@ -27,5 +27,4 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install -g yarn --cache-min 999999999
     - run: yarn 
-    - run: yarn build --if-present
     - run: yarn test
