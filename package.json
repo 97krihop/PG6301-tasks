@@ -7,6 +7,7 @@
   "license": "Apache 2.0",
   "dependencies": {
     "express": "^4.17.1",
+    "jest-fetch-mock": "^3.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router": "^5.2.0",
@@ -39,7 +40,8 @@
     "server": "nodemon --watch src/server src/server/server.js",
     "build": "parcel watch public/index.html",
     "format": " prettier --write .",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "browserslist": [
     "last 1 Chrome version"
@@ -69,7 +71,12 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/**/*.(js|jsx|ts|tsx)"
-    ],"testEnvironment": "node",
-    "testRegex": "tests/.*-test\\.(js|jsx)$"
+    ],
+    "automock": false,
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setupJest.js"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "tests/.*-test\\.(js|jsx|ts|tsx)$"
   }
 }
