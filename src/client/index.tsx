@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router';
 import { BrowserRouter, Link } from 'react-router-dom';
 
 import { Match } from './pages/match';
-import { NotFound } from './pages/not_found';
+import  NotFound  from './pages/not_found';
 import { Home } from './pages/home';
 
 const App = () => {

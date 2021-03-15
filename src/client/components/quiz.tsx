@@ -16,8 +16,6 @@ const Quiz = ({ quiz: { question, answers, correct }, handleClick }: props) => {
       {prefix + answer}
     </button>
   );
-  if (!question) return null;
-
   return (
     <>
       <div>
