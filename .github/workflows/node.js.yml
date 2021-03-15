@@ -25,6 +25,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install -g yarn --cache-min 999999999
-    - run: yarn 
+    - run: yarn install
+    - run: yarn build
     - run: yarn test
