@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Quiz from '../../../client/components/quiz';
+import Quiz from '../../../src/client/components/quiz';
 
 test('testing if quiz returns true', async () => {
   const quiz = {

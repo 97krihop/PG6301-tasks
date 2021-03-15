@@ -39,7 +39,7 @@
     "server": "nodemon --watch src/server src/server/server.js",
     "build": "parcel watch public/index.html",
     "format": " prettier --write .",
-    "test": "jest --coverage"
+    "test": "jest"
   },
   "browserslist": [
     "last 1 Chrome version"
