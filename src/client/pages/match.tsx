@@ -70,8 +70,5 @@ export const Match = (): ReactElement => {
     );
   }
 
-  if (quiz) {
-    return <Quiz quiz={quiz[current]} handleClick={handleClick} />;
-  }
-  return <></>;
+  return <Quiz quiz={quiz[current]} handleClick={handleClick} />;
 };
