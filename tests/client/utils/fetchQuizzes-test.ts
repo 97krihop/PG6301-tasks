@@ -17,3 +17,10 @@ it('should return null', async () => {
   fetch.mockImplementationOnce(() => Promise.resolve({ status: 404 }));
   expect(await fetchQuizzes(3)).toEqual(null);
 });
+it('should return null', async () => {
+  // @ts-ignore
+  fetch.mockImplementationOnce(() =>
+    Promise.resolve({ status: 201, json: () => Promise.reject() })
+  );
+  expect(await fetchQuizzes(3)).toEqual(null);
+});

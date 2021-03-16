@@ -61,3 +61,13 @@ it('should render quiz and go to next if correct', async () => {
   await screen.findByText(`C: ${quiz2.answers[2]}`);
   await screen.findByText(`D: ${quiz2.answers[3]}`);
 });
+
+it('should render quiz and win', async () => {
+  // @ts-ignore
+  fetchQuizzes.mockImplementation(() => {
+    return null;
+  });
+  render(<Match />);
+  await screen.findByText(`Error when connecting to server`);
+
+});
