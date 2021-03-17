@@ -76,11 +76,6 @@
     "collectCoverageFrom": [
       "src/**/**/*.(js|jsx|ts|tsx)"
     ],
-    "automock": false,
-    "setupFilesAfterEnv": [
-      "<rootDir>/tests/setupJest.js"
-    ],
-    "testEnvironment": "node",
-    "testRegex": "tests/.*-test\\.(js|jsx|ts|tsx)$"
+    "automock": false
   }
 }
