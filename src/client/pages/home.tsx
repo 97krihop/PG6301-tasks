@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
   return (
     <div>
       <h1>hello welcome to quiz game</h1>
-      <Link to={'/match'}>
+      <Link to={"/match"}>
         <button>start game</button>
       </Link>
     </div>

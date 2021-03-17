@@ -1,7 +1,7 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import Quiz from '../components/quiz';
-import LoadingView from '../components/LoadingView';
-import { fetchQuizzes } from '../utils/fetchQuizzes';
+import React, { ReactElement, useEffect, useState } from "react";
+import Quiz from "../components/quiz";
+import LoadingView from "../components/LoadingView";
+import { fetchQuizzes } from "../utils/fetchQuizzes";
 
 export interface IQuiz {
   answers: string[];
@@ -49,7 +49,7 @@ export const Match = (): ReactElement => {
       <div>
         <h2>You Won!</h2>
         <div>
-          <button className='quiz' onClick={startGame}>
+          <button className="quiz" onClick={startGame}>
             New Match
           </button>
         </div>
@@ -62,7 +62,7 @@ export const Match = (): ReactElement => {
       <div>
         <h2>Wrong Answer! You Lost!</h2>
         <div>
-          <button className={'quiz'} onClick={startGame}>
+          <button className={"quiz"} onClick={startGame}>
             New Match
           </button>
         </div>

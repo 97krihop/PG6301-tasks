@@ -1,24 +1,24 @@
 const quiz = [
   {
-    question: 'what is absolute zero?',
-    answers: ['-300 Celsius', '0 Kelvin', '0 Fahrenheit', '0 Celsius'],
+    question: "what is absolute zero?",
+    answers: ["-300 Celsius", "0 Kelvin", "0 Fahrenheit", "0 Celsius"],
     correct: 1,
   },
   {
-    question: 'do i like pickles?',
-    answers: ['yes', 'no', 'what a stupid question', 'dont know'],
+    question: "do i like pickles?",
+    answers: ["yes", "no", "what a stupid question", "dont know"],
     correct: 1,
   },
   {
-    question: 'what is a tomato?',
-    answers: ['vegetable', 'herb', 'berry', 'fruit'],
+    question: "what is a tomato?",
+    answers: ["vegetable", "herb", "berry", "fruit"],
     correct: 3,
   },
 ];
 
 function getRandomQuizzes(numberOfQuizzes) {
-  if (numberOfQuizzes < 1) throw 'Invalid number too low';
-  if (numberOfQuizzes > quiz.length) throw 'Too many quizzes asked for';
+  if (numberOfQuizzes < 1) throw "Invalid number too low";
+  if (numberOfQuizzes > quiz.length) throw "Too many quizzes asked for";
 
   const list = Array(numberOfQuizzes);
 
@@ -33,4 +33,4 @@ function getRandomQuizzes(numberOfQuizzes) {
   return Array.from(list).map((x) => quiz[x]);
 }
 
-module.exports = {quiz, getRandomQuizzes}
+module.exports = { quiz, getRandomQuizzes };
