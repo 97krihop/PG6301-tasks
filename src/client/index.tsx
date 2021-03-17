@@ -11,7 +11,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <nav>
-        <Link to={"/"}>Home</Link>
+        <Link to={"/"}>
+          <button className="quiz">Home</button>
+        </Link>
       </nav>
       <main>
         <Switch>

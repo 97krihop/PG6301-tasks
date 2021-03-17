@@ -5,21 +5,33 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Match } from "../../../src/client/pages/match";
-import { fetchQuizzes } from "../../../src/client/utils/fetchQuizzes";
+import { useFetch } from "../../../src/client/hooks/useFetch";
 
 const quiz = {
   question: "what is absolute zero?",
   answers: ["-300 Celsius", "0 Kelvin", "0 Fahrenheit", "0 Celsius"],
   correct: 1,
 };
+const quiz2 = {
+  question: "wow?",
+  answers: ["-qw", "0 aaa", "0 sdasd", "0 aww"],
+  correct: 1,
+};
+jest.mock("../../../src/client/hooks/useFetch");
 
-jest.mock("../../../src/client/utils/fetchQuizzes");
+beforeEach(() => {
+  // @ts-ignore
+  useFetch.mockImplementation(() => {
+    return {
+      data: [quiz],
+      loading: false,
+      error: null,
+      reload: () => {},
+    };
+  });
+});
 
 it("should render quiz and win", async () => {
-  // @ts-ignore
-  fetchQuizzes.mockImplementation(() => {
-    return [quiz];
-  });
   render(<Match />);
   await screen.findByText(`Question: ${quiz.question}`);
   const answer = await screen.findByText(`B: ${quiz.answers[1]}`);
@@ -28,26 +40,24 @@ it("should render quiz and win", async () => {
 });
 
 it("should render quiz and and loose", async () => {
-  // @ts-ignore
-  fetchQuizzes.mockImplementation(() => {
-    return [quiz];
-  });
   render(<Match />);
   await screen.findByText(`Question: ${quiz.question}`);
   const answer = await screen.findByText(`A: ${quiz.answers[0]}`);
   userEvent.click(answer);
   await screen.findByText("Wrong Answer! You Lost!");
 });
+
 it("should render quiz and go to next if correct", async () => {
-  const quiz2 = {
-    question: "wow?",
-    answers: ["-qw", "0 aaa", "0 sdasd", "0 aww"],
-    correct: 1,
-  };
   // @ts-ignore
-  fetchQuizzes.mockImplementation(() => {
-    return [quiz, quiz2];
+  useFetch.mockImplementation(() => {
+    return {
+      data: [quiz, quiz2],
+      loading: false,
+      error: null,
+      reload: () => {},
+    };
   });
+
   render(<Match />);
   await screen.findByText(`Question: ${quiz.question}`);
   await screen.findByText(`A: ${quiz.answers[0]}`);
@@ -64,8 +74,13 @@ it("should render quiz and go to next if correct", async () => {
 
 it("should render quiz and win", async () => {
   // @ts-ignore
-  fetchQuizzes.mockImplementation(() => {
-    return null;
+  useFetch.mockImplementation(() => {
+    return {
+      data: null,
+      loading: false,
+      error: "Error when connecting to server",
+      reload: () => {},
+    };
   });
   render(<Match />);
   await screen.findByText(`Error when connecting to server`);

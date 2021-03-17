@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Quiz from "../components/quiz";
 import LoadingView from "../components/LoadingView";
-import { fetchQuizzes } from "../utils/fetchQuizzes";
+import { useFetch } from "../hooks/useFetch";
 
 export interface IQuiz {
   answers: string[];
@@ -10,8 +10,10 @@ export interface IQuiz {
 }
 
 export const Match = (): ReactElement => {
-  const [error, setError] = useState<string | null>(null);
-  const [quiz, setQuiz] = useState<IQuiz[] | null>(null);
+  const { data: quiz, loading, error, reload } = useFetch<IQuiz[]>(
+    "/api/matches",
+    { method: "post" }
+  );
   const [victory, setVictory] = useState(false);
   const [defeat, setDefeat] = useState(false);
   const [current, setCurrent] = useState(0);
@@ -19,19 +21,13 @@ export const Match = (): ReactElement => {
 
   useEffect(() => {
     startGame();
-  }, []);
+  }, [loading]);
 
   const startGame = async () => {
-    const quizzes = await fetchQuizzes(3);
-    if (!quizzes) setError(`Error when connecting to server`);
-    else {
-      setError(null);
-      setQuiz(quizzes);
-      setVictory(false);
-      setDefeat(false);
-      setCurrent(0);
-      setLength(quizzes.length);
-    }
+    setVictory(false);
+    setDefeat(false);
+    setCurrent(0);
+    setLength(quiz ? quiz.length : 0);
   };
 
   const handleClick = (x: boolean): void => {
@@ -42,14 +38,14 @@ export const Match = (): ReactElement => {
   };
 
   if (error) return <h2>{error}</h2>;
-  if (!quiz) return <LoadingView />;
+  if (loading) return <LoadingView />;
 
   if (victory) {
     return (
       <div>
         <h2>You Won!</h2>
         <div>
-          <button className="quiz" onClick={startGame}>
+          <button className="quiz" onClick={reload}>
             New Match
           </button>
         </div>
@@ -62,7 +58,7 @@ export const Match = (): ReactElement => {
       <div>
         <h2>Wrong Answer! You Lost!</h2>
         <div>
-          <button className={"quiz"} onClick={startGame}>
+          <button className={"quiz"} onClick={reload}>
             New Match
           </button>
         </div>
@@ -70,5 +66,5 @@ export const Match = (): ReactElement => {
     );
   }
 
-  return <Quiz quiz={quiz[current]} handleClick={handleClick} />;
+  return <Quiz quiz={quiz![current]} handleClick={handleClick} />;
 };
