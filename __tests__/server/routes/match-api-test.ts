@@ -6,4 +6,3 @@ it("should return quizzes", async () => {
   expect(res.statusCode).toEqual(201);
   expect(res.body.length).toBe(3);
 });
-export {};

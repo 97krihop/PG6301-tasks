@@ -23,4 +23,3 @@ test("Test get 2", () => {
     expect(quizzes[0].question).not.toBe(quizzes[1].question);
   }
 });
-export {};

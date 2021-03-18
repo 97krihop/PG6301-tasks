@@ -10,8 +10,6 @@ it("should return index.html", async () => {
   );
 });
 it("should return index", async () => {
-  const res = await request(app).get("/aswsawd");
-  //TODO should return 404
-  expect(res.status).toBe(200);
+  const res = await request(app).get("/api");
+  expect(res.status).toBe(404);
 });
-export {};
