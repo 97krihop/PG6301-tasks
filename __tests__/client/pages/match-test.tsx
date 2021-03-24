@@ -17,7 +17,7 @@ const quiz2 = {
   answers: ["-qw", "0 aaa", "0 sdasd", "0 aww"],
   correct: 1,
 };
-jest.mock("../../../src/client/hooks/useFetch");
+jest.mock("../../../src/client/lib/useFetch");
 
 beforeEach(() => {
   // @ts-ignore
