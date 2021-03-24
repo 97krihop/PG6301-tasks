@@ -11,16 +11,13 @@ global.fetch = jest.fn(() =>
   })
 );
 
-// @ts-ignore
-function TestComponent() {
+const TestComponent = () => {
   const { data, loading, error, status } = useFetch("/", {});
   if (loading) return <div>Loading...</div>;
-  if (data) {
-    // @ts-ignore
-    return <div>{data.test}</div>;
-  }
-  return <>wow</>;
-}
+  // @ts-ignore
+  if (data) return <div>{data.test}</div>;
+  return <></>;
+};
 
 it("should render Test", async () => {
   act(() => {
