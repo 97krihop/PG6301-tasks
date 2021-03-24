@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Quiz from "../components/quiz";
 import LoadingView from "../components/LoadingView";
-import { useFetch } from "../hooks/useFetch";
+import { useFetch } from "../lib/useFetch";
 
 export interface IQuiz {
   answers: string[];

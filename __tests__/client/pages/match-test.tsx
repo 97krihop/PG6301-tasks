@@ -5,7 +5,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Match } from "../../../src/client/pages/match";
-import { useFetch } from "../../../src/client/hooks/useFetch";
+import { useFetch } from "../../../src/client/lib/useFetch";
 
 const quiz = {
   question: "what is absolute zero?",

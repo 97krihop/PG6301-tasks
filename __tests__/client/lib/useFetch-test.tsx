@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import React from "react";
-import { useFetch } from "../../../src/client/hooks/useFetch";
+import { useFetch } from "../../../src/client/lib/useFetch";
 
 // @ts-ignore
 global.fetch = jest.fn(() =>
