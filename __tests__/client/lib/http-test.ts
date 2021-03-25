@@ -5,15 +5,17 @@ import {
 } from "../../../src/client/lib/http";
 
 let post: string;
-
-// @ts-ignore
-global.fetch = jest.fn((input: string, options: RequestInit) => {
+beforeEach(() => {
+  post = "";
   // @ts-ignore
-  post = options?.body;
-  return Promise.resolve({
-    status: 201,
-    ok: true,
-    json: () => Promise.resolve({ test: "test" }),
+  global.fetch = jest.fn((input: string, options: RequestInit) => {
+    // @ts-ignore
+    post = options?.body;
+    return Promise.resolve({
+      status: 201,
+      ok: true,
+      json: () => Promise.resolve({ test: "test" }),
+    });
   });
 });
 
