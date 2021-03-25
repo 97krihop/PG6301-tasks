@@ -8,6 +8,13 @@ export const postJson = async (url: string, json: Object) => {
   });
   checkResult(res, url);
 };
+export const postReq = async (url: string) => {
+  const res = await fetch(url, {
+    method: "POST",
+  });
+  checkResult(res, url);
+  return await res.json();
+};
 export const fetchJson = async (url: string) => {
   const res = await fetch(url);
   checkResult(res, url);

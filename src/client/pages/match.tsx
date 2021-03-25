@@ -1,7 +1,8 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Quiz from "../components/quiz";
 import LoadingView from "../components/LoadingView";
-import { useFetch } from "../lib/useFetch";
+import { useLoading } from "../lib/useLoading";
+import { postReq } from "../lib/http";
 
 export interface IQuiz {
   answers: string[];
@@ -10,9 +11,8 @@ export interface IQuiz {
 }
 
 export const Match = (): ReactElement => {
-  const { data: quiz, loading, error, reload } = useFetch<IQuiz[]>(
-    "/api/matches",
-    { method: "post" }
+  const { data: quiz, loading, error, reload } = useLoading<IQuiz[]>(() =>
+    postReq(" /api/matches")
   );
   const [victory, setVictory] = useState(false);
   const [defeat, setDefeat] = useState(false);
