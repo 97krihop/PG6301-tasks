@@ -8,6 +8,11 @@ export const postJson = async (url: string, json: Object) => {
   });
   checkResult(res, url);
 };
+export const fetchJson = async (url: string) => {
+  const res = await fetch(url);
+  checkResult(res, url);
+  return await res.json();
+};
 
 const checkResult = (res: Response, url: string) => {
   if (!res.ok) {
@@ -15,7 +20,7 @@ const checkResult = (res: Response, url: string) => {
   }
 };
 
-class HttpException extends Error {
+export class HttpException extends Error {
   status: number;
 
   constructor(res: Response, url: string) {
