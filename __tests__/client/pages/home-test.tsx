@@ -16,5 +16,3 @@ it("should render home", () => {
   screen.getByText("hello welcome to quiz game");
   screen.getByText("start game");
 });
-
-it("should ", function () {});

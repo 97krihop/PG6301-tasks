@@ -41,7 +41,7 @@ export const Signup = () => {
           type="password"
         />
 
-        <button disabled={submitting}>Log in</button>
+        <button disabled={submitting}>Sign up</button>
       </form>
       <button onClick={() => history.push("/login")}>Login</button>
     </div>
