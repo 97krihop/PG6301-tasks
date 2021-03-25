@@ -5,7 +5,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Match } from "../../../src/client/pages/match";
-import { useFetch } from "../../../src/client/lib/useFetch";
+import { useLoading } from "../../../src/client/lib/useLoading";
 
 const quiz = {
   question: "what is absolute zero?",
@@ -17,11 +17,11 @@ const quiz2 = {
   answers: ["-qw", "0 aaa", "0 sdasd", "0 aww"],
   correct: 1,
 };
-jest.mock("../../../src/client/lib/useFetch");
+jest.mock("../../../src/client/lib/useLoading");
 
 beforeEach(() => {
   // @ts-ignore
-  useFetch.mockImplementation(() => {
+  useLoading.mockImplementation(() => {
     return {
       data: [quiz],
       loading: false,
@@ -49,7 +49,7 @@ it("should render quiz and and loose", async () => {
 
 it("should render quiz and go to next if correct", async () => {
   // @ts-ignore
-  useFetch.mockImplementation(() => {
+  useLoading.mockImplementation(() => {
     return {
       data: [quiz, quiz2],
       loading: false,
@@ -74,11 +74,13 @@ it("should render quiz and go to next if correct", async () => {
 
 it("should render quiz and win", async () => {
   // @ts-ignore
-  useFetch.mockImplementation(() => {
+  useLoading.mockImplementation(() => {
     return {
       data: null,
       loading: false,
-      error: "Error when connecting to server",
+      error: {
+        toString: () => "Error when connecting to server",
+      },
       reload: () => {},
     };
   });

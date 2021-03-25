@@ -20,7 +20,7 @@ export const Signup = () => {
     <div>
       <h2>SignUp!!</h2>
 
-      {error && <div>{error}</div>}
+      {error && <div>{error.toString()}</div>}
 
       <form
         // @ts-ignore

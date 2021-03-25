@@ -1,11 +1,14 @@
 import { ChangeEvent, useState } from "react";
+import { HttpException } from "./http";
 
 export function useSubmit(
   subFunc: () => Promise<void>,
   onSubmitSuccess: () => void
 ) {
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState(undefined);
+  const [error, setError] = useState<typeof HttpException | undefined>(
+    undefined
+  );
 
   const handleSubmit = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

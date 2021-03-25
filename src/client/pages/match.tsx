@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import Quiz from "../components/quiz";
 import LoadingView from "../components/LoadingView";
 import { useLoading } from "../lib/useLoading";
-import { postReq } from "../lib/http";
+import { postJson } from "../lib/http";
 
 export interface IQuiz {
   answers: string[];
@@ -12,7 +12,7 @@ export interface IQuiz {
 
 export const Match = (): ReactElement => {
   const { data: quiz, loading, error, reload } = useLoading<IQuiz[]>(() =>
-    postReq(" /api/matches")
+    postJson(" /api/matches")
   );
   const [victory, setVictory] = useState(false);
   const [defeat, setDefeat] = useState(false);
@@ -37,7 +37,7 @@ export const Match = (): ReactElement => {
     } else setDefeat(true);
   };
 
-  if (error) return <h2>{error}</h2>;
+  if (error) return <h2>{error.toString()}</h2>;
   if (loading) return <LoadingView />;
 
   if (victory) {

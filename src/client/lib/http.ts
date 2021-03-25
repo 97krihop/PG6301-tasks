@@ -1,4 +1,4 @@
-export const postJson = async (url: string, json: Object) => {
+export const postJson = async (url: string, json: Object = {}) => {
   const res = await fetch(url, {
     method: "POST",
     body: JSON.stringify(json),
@@ -7,6 +7,11 @@ export const postJson = async (url: string, json: Object) => {
     },
   });
   checkResult(res, url);
+  try {
+    return await res.json();
+  } catch (e) {
+    console.error(e);
+  }
 };
 export const postReq = async (url: string) => {
   const res = await fetch(url, {
