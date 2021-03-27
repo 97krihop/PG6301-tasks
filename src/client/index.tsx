@@ -24,6 +24,15 @@ const App = () => {
         <Link to={"/login"}>
           <button className="quiz">Login</button>
         </Link>
+        {"  "}
+        <button
+          className="quiz"
+          onClick={async () => {
+            await fetch("/api/logout", { method: "POST" });
+          }}
+        >
+          logout
+        </button>
       </nav>
       <main>
         <Switch>

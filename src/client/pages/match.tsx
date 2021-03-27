@@ -3,6 +3,7 @@ import Quiz from "../components/quiz";
 import LoadingView from "../components/LoadingView";
 import { useLoading } from "../lib/useLoading";
 import { postJson } from "../lib/http";
+import { Link } from "react-router-dom";
 
 export interface IQuiz {
   answers: string[];
@@ -37,7 +38,19 @@ export const Match = (): ReactElement => {
     } else setDefeat(true);
   };
 
-  if (error) return <h2>{error.toString()}</h2>;
+  if (error) {
+    if (error.status === 401) {
+      return (
+        <div>
+          <h2>you are not logged in</h2>
+          <Link to={"/login"}>
+            <button>go to login page</button>
+          </Link>
+        </div>
+      );
+    }
+    return <div>{error.toString()}</div>;
+  }
   if (loading) return <LoadingView />;
 
   if (victory) {
