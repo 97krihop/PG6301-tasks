@@ -3,6 +3,22 @@ const app = require("../../../src/server/app");
 
 let counter = 0;
 
+export const createUser = async (userId: string) => {
+  const agent = request.agent(app);
+  const res = await agent
+    .post("/api/signup")
+    .send({ username: userId, password: "bar" })
+    .set("Content-Type", "application/json");
+  expect(res.statusCode).toEqual(201);
+
+  const res2 = await agent
+    .post("/api/login")
+    .send({ username: userId, password: "bar" })
+    .set("Content-Type", "application/json");
+  expect(res2.statusCode).toEqual(200);
+  return agent;
+};
+
 it("should fail to login", async () => {
   const res = await request(app)
     .post("/api/login")
@@ -58,19 +74,7 @@ it("should create a user and login", async () => {
 it("should get a user and login", async () => {
   const userId = "foo_" + counter++;
 
-  const agent = request.agent(app);
-
-  const res = await agent
-    .post("/api/signup")
-    .send({ username: userId, password: "bar" })
-    .set("Content-Type", "application/json");
-  expect(res.statusCode).toEqual(201);
-
-  const res2 = await agent
-    .post("/api/login")
-    .send({ username: userId, password: "bar" })
-    .set("Content-Type", "application/json");
-  expect(res2.statusCode).toEqual(200);
+  const agent = await createUser(userId);
 
   const {
     statusCode,
@@ -84,19 +88,7 @@ it("should get a user and login", async () => {
 it("should get a user and login", async () => {
   const userId = "foo_" + counter++;
 
-  const agent = request.agent(app);
-
-  const res = await agent
-    .post("/api/signup")
-    .send({ username: userId, password: "bar" })
-    .set("Content-Type", "application/json");
-  expect(res.statusCode).toEqual(201);
-
-  const res2 = await agent
-    .post("/api/login")
-    .send({ username: userId, password: "bar" })
-    .set("Content-Type", "application/json");
-  expect(res2.statusCode).toEqual(200);
+  const agent = await createUser(userId);
 
   const {
     statusCode,

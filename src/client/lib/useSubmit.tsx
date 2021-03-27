@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import { HttpException } from "./http";
 
-export function useSubmit(
+export const useSubmit = (
   subFunc: () => Promise<void>,
   onSubmitSuccess: () => void
-) {
+) => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<typeof HttpException | undefined>(
     undefined
@@ -25,4 +25,4 @@ export function useSubmit(
   };
 
   return { handleSubmit, submitting, error };
-}
+};
