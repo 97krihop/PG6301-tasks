@@ -4,6 +4,17 @@ const { reportEndOfMatch } = require("./users");
 const matches = new Map();
 const amountOfQuizzes = 3;
 
+function removeCorrect(quizzes) {
+  const { id, answers, question } = quizzes;
+  return { question: { id, answers, question } };
+}
+
+const clearMatch = (userId, isVictory) => {
+  reportEndOfMatch(userId, isVictory);
+  matches.delete(userId);
+  return { victory: isVictory };
+};
+
 const startMatches = (userId) => {
   if (matches.has(userId)) {
     clearMatch(userId, false);
@@ -13,13 +24,7 @@ const startMatches = (userId) => {
     quizzes,
     current: 0,
   });
-  return quizzes[0];
-};
-
-const clearMatch = (userId, isVictory) => {
-  reportEndOfMatch(userId, isVictory);
-  matches.delete(userId);
-  return { victory: isVictory };
+  return removeCorrect(quizzes[0]);
 };
 
 const nextQuestion = (userId, answer) => {
@@ -34,8 +39,8 @@ const nextQuestion = (userId, answer) => {
     if (next >= amountOfQuizzes) {
       return clearMatch(userId, true);
     }
-    matches.set(userId, { quizzes, next });
-    return { question: quizzes[next] };
+    matches.set(userId, { quizzes, current: next });
+    return removeCorrect(quizzes[next]);
   }
 };
 const ongoingQuestion = (userId) => {
@@ -43,7 +48,7 @@ const ongoingQuestion = (userId) => {
     throw new Error("cant find match on this user");
   } else {
     const { quizzes, current } = matches.get(userId);
-    return quizzes[current];
+    return removeCorrect(quizzes[current]);
   }
 };
 
