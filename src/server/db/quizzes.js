@@ -3,16 +3,19 @@ const quiz = [
     question: "what is absolute zero?",
     answers: ["-300 Celsius", "0 Kelvin", "0 Fahrenheit", "0 Celsius"],
     correct: 1,
+    id: 0,
   },
   {
     question: "do i like pickles?",
     answers: ["yes", "no", "what a stupid question", "dont know"],
     correct: 1,
+    id: 1,
   },
   {
     question: "what is a tomato?",
     answers: ["vegetable", "herb", "berry", "fruit"],
     correct: 3,
+    id: 2,
   },
 ];
 

@@ -15,7 +15,7 @@ export const createUser = async (userId: string) => {
     .post("/api/login")
     .send({ username: userId, password: "bar" })
     .set("Content-Type", "application/json");
-  expect(res2.statusCode).toEqual(200);
+  expect(res2.statusCode).toEqual(204);
   return agent;
 };
 
@@ -56,7 +56,7 @@ it("should fail to create a user", async () => {
     .post("/api/signup")
     .send({ username: "foo_" + counter++, password: "bar" })
     .set("Content-Type", "application/json");
-  expect(res2.statusCode).toEqual(400);
+  expect(res2.statusCode).toEqual(500);
 });
 it("should create a user and login", async () => {
   const res = await request(app)
@@ -69,7 +69,7 @@ it("should create a user and login", async () => {
     .post("/api/login")
     .send({ username: "foo_" + counter++, password: "bar" })
     .set("Content-Type", "application/json");
-  expect(res2.statusCode).toEqual(200);
+  expect(res2.statusCode).toEqual(204);
 });
 it("should get a user and login", async () => {
   const userId = "foo_" + counter++;

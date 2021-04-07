@@ -16,7 +16,7 @@ router.post("/signup", (req, res) => {
 
   passport.authenticate("local")(req, res, () => {
     req.session.save((err) => {
-      if (err) res.status(500).send();
+      if (err) res.status(400).send();
       else res.status(201).send();
     });
   });
@@ -30,11 +30,10 @@ router.post("/logout", (req, res) => {
 
 router.get("/user", (req, res) => {
   if (!req.user) return res.status(401).send();
-  const user = userDb.getUser(req.user);
   res.status(200).json({
-    id: user.id,
-    victories: user.victories,
-    defeats: user.defeats,
+    id: req.user.id,
+    victories: req.user.victories,
+    defeats: req.user.defeats,
   });
 });
 

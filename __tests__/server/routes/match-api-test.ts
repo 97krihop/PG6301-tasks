@@ -13,5 +13,4 @@ it("should return quizzes", async () => {
 
   const res = await agent.post("/api/matches");
   expect(res.statusCode).toEqual(201);
-  expect(res.body.length).toBe(3);
 });

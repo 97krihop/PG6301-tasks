@@ -1,35 +1,66 @@
 const express = require("express");
-const { ongoingQuestion, nextQuestion, startMatches } = require("../db/match");
+const { removeMatch } = require("../db/match");
+const { reportEndOfMatch, getMatch, createMatch } = require("../db/match");
 
 const router = express.Router();
 
+const getPayload = (match) => {
+  const shallowCopy = Object.assign({}, match.quizzes[match.current]);
+  shallowCopy.correct = undefined;
+
+  return {
+    id: match.id,
+    currentIndex: match.current,
+    currentQuiz: shallowCopy,
+    victory: match.victory,
+    defeat: match.defeat,
+    numberOfQuizzes: match.quizzes.length,
+  };
+};
+const endGame = (req, match, victory) => {
+  victory ? (match.victory = true) : (match.defeat = true);
+  reportEndOfMatch(req.user.id, victory);
+  removeMatch(req.user.id);
+};
+
 router.post("/matches", (req, res) => {
-  if (!req.session.username) return res.status(401).send();
-  const payload = startMatches(req.session.username);
+  if (!req.user) return res.status(401).send();
+
+  const match = createMatch(req.user.id, 3);
+  const payload = getPayload(match);
+
   res.status(201).json(payload);
 });
 
-router.get("/matches/ongoing", (req, res, next) => {
-  if (!req.session.username) return res.status(401).send();
-  try {
-    const payload = ongoingQuestion(req.session.username);
-    res.status(200).json(payload);
-  } catch (e) {
-    next(e);
-  }
+router.get("/matches/ongoing", (req, res) => {
+  if (!req.user) return res.status(401).send();
+
+  const match = getMatch(req.user.id);
+  if (!match) return res.status(404).send();
+
+  const payload = getPayload(match);
+  res.status(200).json(payload);
 });
 
-router.post("/matches/ongoing", (req, res, next) => {
-  if (!req.session.username) return res.status(401).send();
-  try {
-    const { answer } = req.body;
-    const { victory, question } = nextQuestion(req.session.username, answer);
-    if (question) res.status(200).json(question);
-    else if (victory) res.status(200).json({ victory: true });
-    else res.status(200).json({ victory: false });
-  } catch (e) {
-    next(e);
+router.post("/matches/ongoing", (req, res) => {
+  if (!req.user) return res.status(401).send();
+
+  const match = getMatch(req.user.id);
+  if (!match || match.victory || match.defeat) return res.status(400).send();
+
+  const { correct } = match.quizzes[match.current];
+  const { answer } = req.body;
+
+  if (answer === correct) {
+    match.current++;
+    if (match.current === match.quizzes.length) endGame(req, match, true);
+  } else {
+    endGame(req, match, false);
   }
+
+  const payload = getPayload(match);
+
+  res.status(201).json(payload);
 });
 
 module.exports = router;
