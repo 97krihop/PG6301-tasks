@@ -6,5 +6,6 @@ node_modules/
 dist/
 package-lock.json
 coverage/
-server.crt
-server.key
+*.env
+*.crt
+*.key
