@@ -1,3 +1,6 @@
+const path = require("path");
+const fs = require("fs");
+
 const request = require("supertest");
 const app = require("../../src/server/app");
 
@@ -8,6 +11,11 @@ it("should return index.html", async () => {
     "content-type",
     "text/html; charset=UTF-8"
   );
+
+  const buffer = fs.readFileSync(
+    path.resolve(__dirname, "..", "..", "dist", "index.html")
+  );
+  expect(res.text).toEqual(buffer.toString());
 });
 it("should return index", async () => {
   const res = await request(app).get("/api");
