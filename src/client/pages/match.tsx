@@ -1,64 +1,58 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Quiz from "../components/quiz";
 import LoadingView from "../components/LoadingView";
-import { useLoading } from "../lib/useLoading";
-import { postJson } from "../lib/http";
-import { Link } from "react-router-dom";
+import { fetchJson, HttpException, postJson, postReq } from "../lib/http";
+import { ErrorView } from "../components/errorView";
 
 export interface IQuiz {
   answers: string[];
   question: string;
-  correct: number;
 }
 
 export const Match = (): ReactElement => {
-  const { data: quiz, loading, error, reload } = useLoading<IQuiz[]>(() =>
-    postJson(" /api/matches")
-  );
   const [victory, setVictory] = useState(false);
+  const [error, setError] = useState<HttpException | null>(null);
+  const [quiz, setQuiz] = useState<IQuiz | null>(null);
   const [defeat, setDefeat] = useState(false);
-  const [current, setCurrent] = useState(0);
-  const [length, setLength] = useState(0);
 
   useEffect(() => {
-    startGame();
-  }, [loading]);
-
-  const startGame = async () => {
+    starGame();
+  }, []);
+  const starGame = async () => {
+    setError(null);
+    setQuiz(null);
     setVictory(false);
     setDefeat(false);
-    setCurrent(0);
-    setLength(quiz ? quiz.length : 0);
+    try {
+      await postReq("/api/matches");
+      const { currentQuiz } = await fetchJson("/api/matches/ongoing");
+      setQuiz(currentQuiz);
+    } catch (e) {
+      setError(e);
+    }
   };
 
-  const handleClick = (x: boolean): void => {
-    if (x) {
-      if (current === length - 1) setVictory(true);
-      else setCurrent(current + 1);
-    } else setDefeat(true);
+  const handleClick = async (x: number): Promise<void> => {
+    try {
+      const data = await postJson("/api/matches/ongoing", { answer: x });
+      setVictory(data.victory);
+      setDefeat(data.defeat);
+      setQuiz(data.currentQuiz);
+    } catch (e) {
+      setError(e);
+    }
   };
 
   if (error) {
-    if (error.status === 401) {
-      return (
-        <div>
-          <h2>you are not logged in</h2>
-          <Link to={"/login"}>
-            <button>go to login page</button>
-          </Link>
-        </div>
-      );
-    }
-    return <div>{error.toString()}</div>;
+    return <ErrorView error={error} />;
   }
-  if (loading) return <LoadingView />;
 
   if (victory) {
     return (
       <div>
         <h2>You Won!</h2>
         <div>
-          <button className="quiz" onClick={reload}>
+          <button className="quiz" onClick={starGame}>
             New Match
           </button>
         </div>
@@ -71,13 +65,14 @@ export const Match = (): ReactElement => {
       <div>
         <h2>Wrong Answer! You Lost!</h2>
         <div>
-          <button className={"quiz"} onClick={reload}>
+          <button className={"quiz"} onClick={starGame}>
             New Match
           </button>
         </div>
       </div>
     );
   }
+  if (quiz) return <Quiz quiz={quiz} handleClick={handleClick} />;
 
-  return <Quiz quiz={quiz![current]} handleClick={handleClick} />;
+  return <LoadingView />;
 };

@@ -1,6 +1,7 @@
 const express = require("express");
+const { reportEndOfMatch } = require("../db/users");
 const { removeMatch } = require("../db/match");
-const { reportEndOfMatch, getMatch, createMatch } = require("../db/match");
+const { getMatch, createMatch } = require("../db/match");
 
 const router = express.Router();
 
