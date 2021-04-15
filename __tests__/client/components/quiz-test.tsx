@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Quiz from "../../../src/client/components/quiz";
 
 test("testing if quiz returns true", async () => {
@@ -12,8 +12,8 @@ test("testing if quiz returns true", async () => {
     answers: ["-300 Celsius", "0 Kelvin", "0 Fahrenheit", "0 Celsius"],
     correct: 1,
   };
-  let state: boolean;
-  const onClick = (x: boolean) => {
+  let state: number;
+  const onClick = async (x: number) => {
     state = x;
   };
 
@@ -25,7 +25,7 @@ test("testing if quiz returns true", async () => {
   screen.getByText("D: " + quiz.answers[3]);
   await fireEvent.click(screen.getByText("B: " + quiz.answers[1]));
   // @ts-ignore
-  expect(state).toBe(true);
+  expect(state).toBe(1);
 });
 
 test("testing if quiz returns false", async () => {
@@ -34,8 +34,8 @@ test("testing if quiz returns false", async () => {
     answers: ["-300 Celsius", "0 Kelvin", "0 Fahrenheit", "0 Celsius"],
     correct: 1,
   };
-  let state;
-  const onClick = (x: boolean) => {
+  let state: number;
+  const onClick = async (x: number) => {
     state = x;
   };
 
@@ -46,5 +46,6 @@ test("testing if quiz returns false", async () => {
   screen.getByText("C: " + quiz.answers[2]);
   screen.getByText("D: " + quiz.answers[3]);
   await fireEvent.click(screen.getByText("A: " + quiz.answers[0]));
-  expect(state).toBe(false);
+  // @ts-ignore
+  expect(state).toBe(0);
 });
