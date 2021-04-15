@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Quiz from "../components/quiz";
 import LoadingView from "../components/LoadingView";
-import { fetchJson, HttpException, postJson, postReq } from "../lib/http";
+import { fetchJson, HttpException, postJson } from "../lib/http";
 import { ErrorView } from "../components/errorView";
 
 export interface IQuiz {
@@ -24,7 +24,7 @@ export const Match = (): ReactElement => {
     setVictory(false);
     setDefeat(false);
     try {
-      await postReq("/api/matches");
+      await postJson("/api/matches");
       const { currentQuiz } = await fetchJson("/api/matches/ongoing");
       setQuiz(currentQuiz);
     } catch (e) {

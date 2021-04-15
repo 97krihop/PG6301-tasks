@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import { Login } from "../../../src/client/pages/login";
 import React, { ChangeEvent } from "react";
 import { useSubmit } from "../../../src/client/lib/useSubmit";
@@ -25,9 +25,23 @@ beforeEach(() => {
 
 it("should render login", () => {
   render(
-    <BrowserRouter>
+    <MemoryRouter>
       <Login />
-    </BrowserRouter>
+    </MemoryRouter>
+  );
+
+  screen.getByRole("heading");
+  screen.getByRole("textbox", { name: "username:" });
+  const a = screen.getByText("Log in");
+  screen.getByText("SignUp");
+  userEvent.click(a);
+  expect(action).toBe(1);
+});
+it("should render login", () => {
+  render(
+    <MemoryRouter>
+      <Login />
+    </MemoryRouter>
   );
 
   screen.getByRole("heading");
