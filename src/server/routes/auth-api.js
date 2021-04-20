@@ -12,7 +12,7 @@ router.post("/signup", (req, res) => {
   const { username, password } = req.body;
   const success = userDb.createUser(username, password);
 
-  if (!success) returnres.status(400).send();
+  if (!success) return res.status(400).send();
 
   passport.authenticate("local")(req, res, () => {
     req.session.save((err) => {
