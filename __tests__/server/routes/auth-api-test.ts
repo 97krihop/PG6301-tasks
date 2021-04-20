@@ -56,7 +56,7 @@ it("should fail to create a user", async () => {
     .post("/api/signup")
     .send({ username: "foo_" + counter++, password: "bar" })
     .set("Content-Type", "application/json");
-  expect(res2.statusCode).toEqual(500);
+  expect(res2.statusCode).toEqual(400);
 });
 it("should create a user and login", async () => {
   const res = await request(app)
