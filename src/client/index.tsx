@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Route, Switch } from "react-router";
 import { BrowserRouter, Link } from "react-router-dom";
@@ -10,9 +10,42 @@ import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 
 const App = () => {
+  const [userCount, setUserCount] = useState<string | number>(0);
+  const [socket, setSocket] = useState<WebSocket>();
+
+  useEffect(() => {
+    const protocol =
+      window.location.protocol.toLowerCase() === "https:" ? "wss:" : "ws:";
+    if (!socket)
+      setSocket(new WebSocket(`${protocol}//${window.location.host}`));
+
+    if (socket)
+      socket.onmessage = (event) => {
+        const dto = JSON.parse(event.data);
+
+        if (!dto || !dto.userCount) {
+          setUserCount("ERROR");
+          return;
+        }
+        console.log(dto);
+        setUserCount(dto.userCount);
+      };
+    if (socket)
+      socket.onclose = (event) => {
+        setTimeout(() => {
+          setSocket(new WebSocket(`${protocol}//${window.location.host}`));
+        }, 2500);
+      };
+
+    return () => {
+      socket?.close();
+    };
+  }, [socket]);
+
   return (
     <BrowserRouter>
       <nav>
+        <p>users: {userCount}</p>
         <Link to={"/"}>
           <button className="quiz">Home</button>
         </Link>
