@@ -3,11 +3,10 @@
  */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { Home } from "../../../src/client/pages/home";
 import { MemoryRouter } from "react-router-dom";
 import { fetchJson } from "../../../src/client/lib/http";
-import { act } from "react-dom/test-utils";
 
 jest.mock("../../../src/client/lib/http");
 // @ts-ignore
